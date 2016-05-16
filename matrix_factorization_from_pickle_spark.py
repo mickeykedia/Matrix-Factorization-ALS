@@ -1,6 +1,6 @@
 import numpy as np
 from pyspark import SparkContext
-
+import datetime
 def parseMovieFile(line):
     if line[0] ==  0:
         return {'movie':int(line[1].rstrip(':'))}
@@ -19,7 +19,7 @@ sc._jsc.hadoopConfiguration().set("fs.s3n.awsAccessKeyId",'')
 sc._jsc.hadoopConfiguration().set("fs.s3n.awsSecretAccessKey", '')
 
 # Change the name of the pickle file here
-rdd = sc.pickleFile("s3n://netflix-dataset-pickle/rdd1.pickle")
+rdd = sc.pickleFile("s3n://netflix-dataset-pickle/rdd2.pickle")
 
 def map_to_item_user_rating(d):
     movie = d['movie']
@@ -110,15 +110,14 @@ Items_broadcast = sc.broadcast({
 
 
 def getRowSumSquares(userTuple):
+    userRow = Users_broadcast.value[userTuple[0]]
+    rowSSE = 0.0
     for matrixA_item_Tuple in userTuple[1]:
-    	userRow = Users_broadcast.value[userTuple[0]]
-		rowSSE = 0.0
-		for matrixA_item_Tuple in userTuple[1]:
-	        predictedRating = 0.0
-	        for i in range(n_factors.value):
-	            predictedRating += userRow[0][i] * Items_broadcast.value[matrixA_user_Tuple][0][i]
-	        SE = (userTuple[1][matrixA_item_Tuple] - predictedRating) ** 2
-	        rowSSE += SE
+        predictedRating = 0.0
+        for i in range(n_factors.value):
+            predictedRating += userRow[0][i] * Items_broadcast.value[matrixA_item_Tuple][0][i]
+        SE = (userTuple[1][matrixA_item_Tuple] - predictedRating) ** 2
+        rowSSE += SE
     return rowSSE
 
 
@@ -127,7 +126,6 @@ Count = mv_ratings.count()
 MSE = SSE / Count
 print "MSE:", MSE
 
- ]:
 for iter in range(n_iterations):
     Users = user_item_ratings.map(Update_User)
     Users_broadcast = sc.broadcast({k: v for (k, v) in Users.collect()})
