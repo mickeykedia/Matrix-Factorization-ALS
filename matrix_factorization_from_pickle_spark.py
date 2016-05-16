@@ -122,7 +122,7 @@ def getRowSumSquares(userTuple):
 
 
 SSE = user_item_ratings.map(getRowSumSquares).reduce(lambda a, b: a + b) 
-Count = mv_ratings.count()
+Count = item_user_ratings.count()
 MSE = SSE / Count
 print "MSE:", MSE
 
