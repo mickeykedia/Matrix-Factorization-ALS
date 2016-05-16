@@ -1,0 +1,40 @@
+Number of features:10
+RDD dataset:rdd2.pickle
+RDD dataset:rdd3.pickle
+RDD dataset:rdd4.pickle
+RDD dataset:rdd5.pickle
+Number of Items:6221
+Number of Users:476283
+Number of Ratings:36115043
+MSE: 4495.49666914
+first_iteration:864.334928036
+MSE: 4041.5922225
+Time taken:1616.97442293
+Number of features:50
+RDD dataset:rdd2.pickle
+Number of Items:1223
+Number of Users:432472
+Number of Ratings:6629431
+Traceback (most recent call last):
+  File "/home/hadoop/matrix_factorization_from_pickle_spark.py", line 130, in <module>
+    k: v for (k, v) in Items.collect()
+  File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/rdd.py", line 771, in collect
+  File "/usr/lib/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py", line 811, in __call__
+  File "/usr/lib/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py", line 626, in send_command
+  File "/usr/lib/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py", line 740, in send_command
+  File "/usr/lib64/python2.7/socket.py", line 434, in readline
+    data = recv(1)
+  File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/context.py", line 225, in signal_handler
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/home/hadoop/matrix_factorization_from_pickle_spark.py", line 24, in <module>
+    sc = SparkContext(appName="Saving to correct format")
+  File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/context.py", line 115, in __init__
+  File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/context.py", line 172, in _do_init
+  File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/context.py", line 235, in _initialize_context
+  File "/usr/lib/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py", line 1062, in __call__
+  File "/usr/lib/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py", line 626, in send_command
+  File "/usr/lib/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py", line 740, in send_command
+  File "/usr/lib64/python2.7/socket.py", line 434, in readline
+    data = recv(1)
+KeyboardInterrupt
