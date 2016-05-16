@@ -1,0 +1,109 @@
+Number of features:10
+RDD dataset:rdd2.pickle
+Number of Items:1223
+Number of Users:432472
+Number of Ratings:6629431
+MSE: 2983.2422544
+first_iteration:406.35908103
+MSE: 2506.89836419
+Time taken:703.421060085
+MSE: 2404.39590345
+Time taken:1026.00377107
+MSE: 2338.40000188
+Time taken:1405.46038198
+MSE: 2283.264429
+Time taken:1705.0885241
+MSE: 2237.33915154
+Time taken:2031.13013506
+MSE: 2200.13755624
+Time taken:2338.14269805
+MSE: 2170.31283946
+Time taken:2657.84830403
+MSE: 2146.25781944
+Time taken:3036.8203969
+MSE: 2126.54585212
+Time taken:3339.88511109
+MSE: 2110.05639863
+Time taken:3635.37367296
+MSE: 2095.97348728
+Time taken:3930.18194604
+MSE: 2083.72463821
+Time taken:4226.13566804
+MSE: 2072.94726937
+Time taken:4541.79267406
+MSE: 2063.39300499
+Time taken:4919.25988698
+MSE: 2054.84671807
+Time taken:5219.86729503
+Number of features:10
+RDD dataset:rdd2.pickle
+RDD dataset:rdd3.pickle
+Number of Items:2723
+Number of Users:461588
+Number of Ratings:15140171
+MSE: 3916.3782948
+first_iteration:395.667455196
+MSE: 3442.85325879
+Time taken:749.535260201
+MSE: 3303.53570312
+Time taken:1115.11396909
+MSE: 3180.90201752
+Time taken:1463.86889505
+MSE: 3090.21155388
+Time taken:1798.16455412
+MSE: 3028.15803919
+Time taken:2138.11746716
+MSE: 2984.78898175
+Time taken:2513.32549715
+MSE: 2952.93148553
+Time taken:2860.93239713
+MSE: 2928.45770126
+Time taken:3199.84788203
+MSE: 2909.0199966
+Time taken:3558.09978318
+MSE: 2893.14162705
+Time taken:3901.99344802
+MSE: 2879.84385488
+Time taken:4238.82806516
+MSE: 2868.48271539
+Time taken:4580.20692801
+MSE: 2858.6196051
+Time taken:4925.18025804
+MSE: 2849.92805759
+Time taken:5269.39714718
+MSE: 2842.19077775
+Time taken:5639.7141571
+Number of features:10
+RDD dataset:rdd2.pickle
+RDD dataset:rdd3.pickle
+RDD dataset:rdd4.pickle
+Number of Items:4222
+Number of Users:471928
+Number of Ratings:24108516
+MSE: 4337.9055639
+first_iteration:573.33427
+MSE: 3832.87085514
+Time taken:1123.32375193
+MSE: 3627.72772827
+Time taken:1712.60683393
+MSE: 3495.22633702
+Time taken:2271.75341511
+MSE: 3412.05152642
+Time taken:2787.97663808
+MSE: 3354.81231373
+Time taken:3314.85935593
+MSE: 3313.16383723
+Time taken:3867.60871196
+MSE: 3281.73393775
+Time taken:4396.56126809
+Traceback (most recent call last):
+  File "/home/hadoop/matrix_factorization_from_pickle_spark.py", line 158, in <module>
+    Items_broadcast = sc.broadcast({k: v for (k, v) in Items.collect()})
+  File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/rdd.py", line 771, in collect
+  File "/usr/lib/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py", line 811, in __call__
+  File "/usr/lib/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py", line 626, in send_command
+  File "/usr/lib/spark/python/lib/py4j-0.9-src.zip/py4j/java_gateway.py", line 740, in send_command
+  File "/usr/lib64/python2.7/socket.py", line 434, in readline
+    data = recv(1)
+  File "/usr/lib/spark/python/lib/pyspark.zip/pyspark/context.py", line 225, in signal_handler
+KeyboardInterrupt
