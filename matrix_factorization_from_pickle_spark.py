@@ -1,6 +1,13 @@
 import numpy as np
 from pyspark import SparkContext
 import datetime
+import time
+import sys
+
+
+
+t0 = time.time()
+
 def parseMovieFile(line):
     if line[0] ==  0:
         return {'movie':int(line[1].rstrip(':'))}
@@ -15,11 +22,29 @@ def merge_dicts(x, y):
     
 
 sc = SparkContext(appName="Saving to correct format")
+
+n_factors = sys.argv[1]
+print "Number of features:"+n_factors
+lambda_ = sc.broadcast(0.1) # Regularization parameter
+n_factors = sc.broadcast(int(n_factors)) # nfactors of User matrix and Item matrix
+n_iterations = 1
+
+
 sc._jsc.hadoopConfiguration().set("fs.s3n.awsAccessKeyId",'')
 sc._jsc.hadoopConfiguration().set("fs.s3n.awsSecretAccessKey", '')
 
-# Change the name of the pickle file here
-rdd = sc.pickleFile("s3n://netflix-dataset-pickle/rdd2.pickle")
+rdds = []
+if len(sys.argv) > 2:
+    for j in range(len(sys.argv) - 2):
+        print "RDD dataset:"+sys.argv[2+j]
+        rdds.append(sc.pickleFile("s3n://netflix-dataset-pickle/"+sys.argv[2+j]))
+else:
+    print "RDD dataset:rdd2.pickle"
+    rdds.append(sc.pickleFile("s3n://netflix-dataset-pickle/rdd2.pickle"))
+
+rdd = sc.union(rdds)
+
+
 
 def map_to_item_user_rating(d):
     movie = d['movie']
@@ -42,9 +67,6 @@ print "Number of Ratings:" + str(user_ratings.count())
 
 
 
-lambda_ = sc.broadcast(0.1) # Regularization parameter
-n_factors = sc.broadcast(3) # nfactors of User matrix and Item matrix
-n_iterations = 10
 
 Items = item_user_ratings.map(lambda line: (line[0], 5 * np.random.rand(1, n_factors.value)))
 Items_broadcast = sc.broadcast({
@@ -126,6 +148,9 @@ Count = item_user_ratings.count()
 MSE = SSE / Count
 print "MSE:", MSE
 
+t1 = time.time() - t0
+print "first_iteration:"+ str(t1)
+
 for iter in range(n_iterations):
     Users = user_item_ratings.map(Update_User)
     Users_broadcast = sc.broadcast({k: v for (k, v) in Users.collect()})
@@ -134,3 +159,5 @@ for iter in range(n_iterations):
     SSE = user_item_ratings.map(getRowSumSquares).reduce(lambda a, b: a + b)
     MSE = SSE / Count
     print "MSE:", MSE
+    t2 = time.time() - t0 
+    print "Time taken:"+str(t2)
